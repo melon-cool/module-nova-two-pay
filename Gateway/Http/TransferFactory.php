@@ -43,7 +43,6 @@ class TransferFactory implements TransferFactoryInterface
 
         $logger = \Magento\Framework\App\ObjectManager::getInstance()->get(\Psr\Log\LoggerInterface::class);
         $logger->debug('liu melon_recive' . json_encode($request));
-        $logger->debug('liu REQUST'.json_encode($_REQUEST));
 
         return $this->transferBuilder
             ->setBody($request)

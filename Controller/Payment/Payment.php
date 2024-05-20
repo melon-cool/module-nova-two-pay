@@ -134,7 +134,8 @@ class Payment extends \Magento\Framework\App\Action\Action
 			$updateSql .= "grand_total = '{$paid_amount}',";
 			$updateSql .= "base_grand_total = '{$paid_amount}'";
 			$updateSql .= " WHERE entity_id = {$orderId}";
-			echo $updateSql;
+
+			$logger->debug('liu order_query_sql--'.$updateSql);
 
  //执行SQL更新语句
 			try {
@@ -142,14 +143,14 @@ class Payment extends \Magento\Framework\App\Action\Action
 				// 成功后的操作，例如记录日志或其他
 			} catch (\Magento\Framework\Exception\LocalizedException $e) {
 				// 出现错误时的操作，例如记录日志或其他
-				echo "query fail";
-				exit;
+				$result->setData(['message' => 'query fail']);
+				return $result;
 			}
-			echo "notify success";
-			exit;
+			$result->setData(['message' => 'notify success']);
+			return $result;
 		} else {
-			echo "pay status error";
-			exit;
+			$result->setData(['message' => 'pay status error']);
+			return $result;
 		}
 	}
 	public function createCsrfValidationException(RequestInterface $request): ? InvalidRequestException
@@ -192,12 +193,16 @@ class Payment extends \Magento\Framework\App\Action\Action
 			if ($isValid) {
 				return $isValid;
 			} else {
-				echo " isValid  fail";
-				exit;
+				// 创建JSON响应
+				$result = $this->jsonFactory->create();
+				$result->setData(['message' => ' isValid  fail']);
+				return $result;
 			}
 		} catch (\Magento\Framework\Exception\LocalizedException $e) {
-			echo " isValid  fail";
-			exit;
+			// 创建JSON响应
+			$result = $this->jsonFactory->create();
+			$result->setData(['message' => ' isValid  fail']);
+			return $result;
 		}
 	}
 

@@ -408,12 +408,16 @@ class NovaPayment extends \Magento\Framework\App\Action\Action
 			if ($isValid) {
 				return $isValid;
 			} else {
-				echo " isValid  fail";
-				exit;
+				// 创建JSON响应
+				$result = $this->jsonFactory->create();
+				$result->setData(['message' => ' isValid  fail']);
+				return $result;
 			}
 		} catch (\Magento\Framework\Exception\LocalizedException $e) {
-			echo " isValid  fail";
-			exit;
+			// 创建JSON响应
+			$result = $this->jsonFactory->create();
+			$result->setData(['message' => ' isValid  fail']);
+			return $result;
 		}
 	}
 

@@ -1,5 +1,5 @@
 {
-    "name": "nova/module-nova-two-pay",
+    "name": "nova2pay/module-nova-two-pay",
     "description": "Demonstrates integration with payment gateway",
     "require": {
         "php": ">=7.1",
