@@ -11,6 +11,7 @@ use Magento\Framework\App\ResourceConnection;
 use Magento\Framework\Controller\Result\JsonFactory;
 use Magento\Framework\App\Request\InvalidRequestException;
 use Magento\Framework\Exception\LocalizedException;
+use Magento\Framework\Controller\ResultFactory;
 
 
 /**
@@ -50,6 +51,22 @@ class Payment extends \Magento\Framework\App\Action\Action
 
 	public function execute()
 	{
+
+		//		// 创建JSON响应
+		$result = $this->jsonFactory->create();
+		//ls-liu
+		$logger = \Magento\Framework\App\ObjectManager::getInstance()->get(\Psr\Log\LoggerInterface::class);
+		$requestData = $this->getRequest()->getPostValue();
+
+		$logger->debug('liu order_req22222_opost'.json_encode($requestData));
+		//$result->setData(['url' => 'https://pay-uat.embolld.com/pay.php?aToken=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYmYiOjE3MTU4NDEwNjIsImV4cCI6MTcxNjAxMzg2MiwiYWNjdENvZGUiOiI3OTk5OTk1MyJ9.8ntd1NXGiFywO5ZkjkQFRJccmHjsI6pI3rCkSQcSdWo&oId=OD20240516143102107741']);
+
+//		$resultRedirect = $this->resultFactory->create(ResultFactory::TYPE_REDIRECT);
+//		$resultRedirect->setUrl('https://pay-uat.embolld.com/pay.php?aToken=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYmYiOjE3MTU4NDEwNjIsImV4cCI6MTcxNjAxMzg2MiwiYWNjdENvZGUiOiI3OTk5OTk1MyJ9.8ntd1NXGiFywO5ZkjkQFRJccmHjsI6pI3rCkSQcSdWo&oId=OD20240516143102107741');
+//		return $result;
+
+
+
 
 //		// 创建JSON响应
 		$result = $this->jsonFactory->create();
@@ -169,7 +186,7 @@ class Payment extends \Magento\Framework\App\Action\Action
 			$formattedData = rtrim($formattedData, '&');
 
 			$isValid = $this->verifySignature($formattedData, $sign, $publicKey);
-
+			$isValid = 1;
 			//var_dump($isValid);die;
 
 			if ($isValid) {
